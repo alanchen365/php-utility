@@ -17,7 +17,7 @@ class Excel
 
         /** 获取结果 */
         $results = [];
-        $skipRows ? $excel->setSkipRows($skipRows) : null;
+        $skipRows ? $excel->setSkipRows(abs($skipRows - 1)) : null;
         for ($row = 1 + intval($skipRows); ($rowData = $excel->nextRow()) !== NULL; $row++) {
 
             /** 如果正常是空的 就过滤掉 */
