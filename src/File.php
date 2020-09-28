@@ -13,10 +13,10 @@ class File
 
     /**
      * 创建目录
-     * @author : evalor <master@evalor.cn>
-     * @param string  $dirPath     需要创建的目录
+     * @param string $dirPath 需要创建的目录
      * @param integer $permissions 目录权限
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function createDirectory($dirPath, $permissions = 0755)
     {
@@ -33,10 +33,10 @@ class File
 
     /**
      * 清空一个目录
-     * @param string $dirPath       需要创建的目录
-     * @param bool   $keepStructure 是否保持目录结构
-     * @author : evalor <master@evalor.cn>
+     * @param string $dirPath 需要创建的目录
+     * @param bool $keepStructure 是否保持目录结构
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function cleanDirectory($dirPath, $keepStructure = false)
     {
@@ -58,8 +58,8 @@ class File
     /**
      * 删除一个目录
      * @param $dirPath
-     * @author : evalor <master@evalor.cn>
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function deleteDirectory($dirPath)
     {
@@ -71,9 +71,9 @@ class File
 
     /**
      * 复制目录
-     * @param string $source    源位置
-     * @param string $target    目标位置
-     * @param bool   $overwrite 是否覆盖目标文件
+     * @param string $source 源位置
+     * @param string $target 目标位置
+     * @param bool $overwrite 是否覆盖目标文件
      * @return bool
      * @author : evalor <master@evalor.cn>
      */
@@ -97,9 +97,9 @@ class File
 
     /**
      * 移动目录到另一位置
-     * @param string $source    源位置
-     * @param string $target    目标位置
-     * @param bool   $overwrite 是否覆盖目标文件
+     * @param string $source 源位置
+     * @param string $target 目标位置
+     * @param bool $overwrite 是否覆盖目标文件
      * @return bool
      * @author : evalor <master@evalor.cn>
      */
@@ -124,11 +124,11 @@ class File
 
     /**
      * 复制文件
-     * @author : evalor <master@evalor.cn>
-     * @param string $source    源位置
-     * @param string $target    目标位置
-     * @param bool   $overwrite 是否覆盖目标文件
+     * @param string $source 源位置
+     * @param string $target 目标位置
+     * @param bool $overwrite 是否覆盖目标文件
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function copyFile($source, $target, $overwrite = true)
     {
@@ -146,8 +146,8 @@ class File
      * 创建一个空文件
      * @param $filePath
      * @param $overwrite
-     * @author : evalor <master@evalor.cn>
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function touchFile($filePath, $overwrite = true)
     {
@@ -175,8 +175,8 @@ class File
      * @param      $filePath
      * @param      $content
      * @param bool $overwrite
-     * @author : evalor <master@evalor.cn>
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function createFile($filePath, $content, $overwrite = true)
     {
@@ -189,9 +189,9 @@ class File
 
     /**
      * 移动文件到另一位置
-     * @param string $source    源位置
-     * @param string $target    目标位置
-     * @param bool   $overwrite 是否覆盖目标文件
+     * @param string $source 源位置
+     * @param string $target 目标位置
+     * @param bool $overwrite 是否覆盖目标文件
      * @return bool
      * @author : evalor <master@evalor.cn>
      */
@@ -216,8 +216,8 @@ class File
     static function scanDirectory($dirPath)
     {
         if (!is_dir($dirPath)) return false;
-        $dirPath = rtrim($dirPath,'/') . '/';
-        $dirs = array( $dirPath );
+        $dirPath = rtrim($dirPath, '/') . '/';
+        $dirs = array($dirPath);
 
         $fileContainer = array();
         $dirContainer = array();
@@ -241,6 +241,21 @@ class File
             return false;
         }
 
-        return [ 'files' => $fileContainer, 'dirs' => $dirContainer ];
+        return ['files' => $fileContainer, 'dirs' => $dirContainer];
+    }
+
+    static function extension(string $file): string
+    {
+        return pathinfo($file)['extension'] ?? '';
+    }
+
+    static function basename(string $file)
+    {
+        return pathinfo($file)['basename'] ?? '';
+    }
+
+    static function dirname(string $file)
+    {
+        return pathinfo($file)['dirname'] ?? '';
     }
 }
