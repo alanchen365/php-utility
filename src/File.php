@@ -249,12 +249,12 @@ class File
         return pathinfo($file)['extension'] ?? '';
     }
 
-    static function basename(string $file)
+    static function basename(string $file): string
     {
         return pathinfo($file)['basename'] ?? '';
     }
 
-    static function dirname(string $file)
+    static function dirname(string $file): string
     {
         return pathinfo($file)['dirname'] ?? '';
     }
