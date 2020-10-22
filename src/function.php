@@ -37,3 +37,8 @@ function superEmpty($value): bool
 
     return false;
 }
+
+function nowdate(string $format = 'Y-m-d H:i:s'): string
+{
+    return date($format, time());
+}
