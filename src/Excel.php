@@ -13,12 +13,14 @@ class Excel
 
         /** 获取 sheet */
         $sheetName = superEmpty($sheetName) ? current((array)$sheetList) : $sheetName;
-        $excel->openFile($filePath)->openSheet($sheetName, \Vtiful\Kernel\Excel::SKIP_EMPTY_ROW);
+        $excel->openFile($filePath)->openSheet($sheetName);
 
         /** 获取结果 */
         $results = [];
-        $skipRows ? $excel->setSkipRows(abs($skipRows - 1)) : null;
-        for ($row = 1 + intval($skipRows); ($rowData = $excel->nextRow()) !== NULL; $row++) {
+        $cellReadType = [];
+        array_walk($mapping, function ($value) use(&$cellReadType){$cellReadType[] = $value['type'] ?? \Vtiful\Kernel\Excel::TYPE_STRING;});
+        $skipRows ? $excel->setSkipRows($skipRows) : null;
+        for (; ($rowData = $excel->nextRow($cellReadType)) !== NULL;) {
 
             /** 如果正常是空的 就过滤掉 */
             if (empty(array_filter($rowData))) {
@@ -27,6 +29,7 @@ class Excel
 
             $tmp = [];
             foreach ($mapping as $column => $key) {
+                $key = $key['column'] ?? $key;
                 $column = \Vtiful\Kernel\Excel::columnIndexFromString($column);
                 $tmp[$key] = $rowData[$column] ?? null;
             }
