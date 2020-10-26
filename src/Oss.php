@@ -8,37 +8,33 @@ use Es3\Exception\InfoException;
 use Es3\Exception\WaringException;
 use OSS\OssClient;
 
-/**
- * Class Oss
- * @package Es3\Utility
- */
 class Oss
 {
-    /**
-     * @param $file 上传的文件
-     * @param string $directory 对应的目录
+    /** 文件上传
+     * @param string $filePath 服务器的文件路径
+     * @param string $originalName 原始文件名称
+     * @param string $toDirectory 上传到远程目录
+     * @param string $bucket
      * @param string $accessId
      * @param string $accessKey
      * @param string $endpoint
+     * @return array
+     * @throws WaringException
      * @throws \OSS\Core\OssException
      */
-    static function upload(UploadFile $file, string $directory, string $bucket, string $accessId, string $accessKey, string $endpoint): array
+    static function upload(string $filePath, string $originalName, string $toDirectory, string $bucket, string $accessId, string $accessKey, string $endpoint): array
     {
         $ossClient = new OssClient($accessId, $accessKey, $endpoint);
 
-        /** 原始文件 */
-        $original = $file->getClientFilename();
-
         // 截取上传原始文件信息
-        $directory = trim($directory, '/');
-        $ext = pathinfo($original, PATHINFO_EXTENSION);
-        $name = pathinfo($original, PATHINFO_FILENAME);
+        $toDirectory = trim($toDirectory, '/');
+        $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+        $name = pathinfo($originalName, PATHINFO_FILENAME);
 
         $newName = date('YmdHis') . rand(0, 10000) . '.' . $ext;
-        $location = "{$directory}/{$newName}";
-        $filePath = $file->getTempName();
+        $location = "{$toDirectory}/{$newName}";
 
-        //上传图片
+        // 上传文件
         $result = $ossClient->uploadFile($bucket, $location, $filePath);
         if (false === $result) {
             throw new WaringException(7501, 'Oss文件上传失败');
@@ -48,7 +44,7 @@ class Oss
             'system_code' => AppConst::SYSTEM_CODE,
             'hash' => $result['x-oss-hash-crc64ecma'] ?? '',
             'host' => $result['oss-requestheaders']['Host'] ?? '',
-            'original' => $file->getClientFilename(),
+            'originalName' => $originalName,
             'location' => $location,
             'ext' => $ext,
             'http' => 'http://' . $result['oss-requestheaders']['Host'] . '/' . $location,
