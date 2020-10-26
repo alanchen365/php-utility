@@ -6,6 +6,7 @@
     "require": {
         "php": ">=7.1.0",
         "ext-json": "*",
+        "aliyuncs/oss-sdk-php": "*",
         "ext-openssl": "*"
     },
     "autoload": {
