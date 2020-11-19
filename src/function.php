@@ -19,7 +19,11 @@ function superEmpty($value): bool
 
     // 如果是一个对象
     if (is_object($value)) {
-        return empty($value->id) ? true : false;
+        if (empty((array)$value)) {
+            return true;
+        }
+        return false;
+//        return empty($value->id) ? true : false;
     }
 
     // 如果是其它
