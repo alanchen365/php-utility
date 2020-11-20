@@ -4,7 +4,7 @@ namespace Es3\Utility;
 
 class Url
 {
-    public function ToUrlParams(array $params): string
+    public static function ToUrlParams(array $params): string
     {
         $buff = "";
         foreach ($params as $k => $v) {
