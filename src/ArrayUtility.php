@@ -43,8 +43,8 @@ class ArrayUtility
      * var_dump($arr); # 结果只有一个test
      * </code>
      *
-     * @param array $arr  要处理的数组
-     * @param bool  $trim 是否对数组元素调用 trim 函数
+     * @param array $arr 要处理的数组
+     * @param bool $trim 是否对数组元素调用 trim 函数
      */
     public static function removeEmpty(&$arr, $trim = true)
     {
@@ -81,7 +81,7 @@ class ArrayUtility
      *   // )
      * </code>
      *
-     * @param array  $arr 数据源
+     * @param array $arr 数据源
      * @param string $col 要查询的键
      *
      * @return array 包含指定键所有值的数组
@@ -152,10 +152,10 @@ class ArrayUtility
      *   // )
      * </code>
      *
-     * @param array  $arr              数据源
-     * @param string $key_field        按照什么键的值进行转换
-     * @param string $value_field      对应的键值
-     * @param bool   $force_string_key 强制使用字符串KEY
+     * @param array $arr 数据源
+     * @param string $key_field 按照什么键的值进行转换
+     * @param string $value_field 对应的键值
+     * @param bool $force_string_key 强制使用字符串KEY
      *
      * @return array 转换后的 HashMap 样式数组
      */
@@ -167,12 +167,12 @@ class ArrayUtility
         $ret = array();
         if ($value_field) {
             foreach ($arr as $row) {
-                $key = $force_string_key ? (string) $row[$key_field] : $row[$key_field];
+                $key = $force_string_key ? (string)$row[$key_field] : $row[$key_field];
                 $ret[$key] = $row[$value_field];
             }
         } else {
             foreach ($arr as $row) {
-                $key = $force_string_key ? (string) $row[$key_field] : $row[$key_field];
+                $key = $force_string_key ? (string)$row[$key_field] : $row[$key_field];
                 $ret[$key] = $row;
             }
         }
@@ -213,7 +213,7 @@ class ArrayUtility
      *   // )
      * </code>
      *
-     * @param array  $arr       数据源
+     * @param array $arr 数据源
      * @param string $key_field 作为分组依据的键名
      *
      * @return array 分组后的结果
@@ -303,11 +303,11 @@ class ArrayUtility
      * print_r($refs[$id]);
      * </code>
      *
-     * @param array  $arr           数据源
-     * @param string $key_node_id   节点ID字段名
+     * @param array $arr 数据源
+     * @param string $key_node_id 节点ID字段名
      * @param string $key_parent_id 节点父ID字段名
      * @param string $key_childrens 保存子节点的字段名
-     * @param bool   $refs          是否在返回结果中包含节点引用
+     * @param bool $refs 是否在返回结果中包含节点引用
      *
      * return array 树形结构的数组
      */
@@ -342,7 +342,7 @@ class ArrayUtility
      *
      * 这个方法是 tree() 方法的逆向操作。
      *
-     * @param array  $tree          树形数组
+     * @param array $tree 树形数组
      * @param string $key_childrens 包含子节点的键名
      *
      * @return array 展开后的数组
@@ -392,9 +392,9 @@ class ArrayUtility
      * // )
      * </code>
      *
-     * @param array  $array   要排序的数组
+     * @param array $array 要排序的数组
      * @param string $keyname 排序的键
-     * @param int    $dir     排序方向
+     * @param int $dir 排序方向
      *
      * @return array 排序后的数组
      */
@@ -415,7 +415,7 @@ class ArrayUtility
      * </code>
      *
      * @param array $rowset 要排序的数组
-     * @param array $args   排序的键
+     * @param array $args 排序的键
      *
      * @return array 排序后的数组
      */
@@ -427,12 +427,12 @@ class ArrayUtility
             foreach ($rowset as $offset => $row) {
                 $sortArray[$sortField][$offset] = $row[$sortField];
             }
-            $sortRule .= '$sortArray[\''.$sortField.'\'], '.$sortDir.', ';
+            $sortRule .= '$sortArray[\'' . $sortField . '\'], ' . $sortDir . ', ';
         }
         if (empty($sortArray) || empty($sortRule)) {
             return $rowset;
         }
-        eval('array_multisort('.$sortRule.'$rowset);');
+        eval('array_multisort(' . $sortRule . '$rowset);');
 
         return $rowset;
     }
@@ -448,9 +448,9 @@ class ArrayUtility
      * // Get the values of "color" in theme
      * $colors = Util_Array::path($array, 'theme.*.color');
      *
-     * @param array  $array   数组
-     * @param string $path    字符串，多维的由$delimiter连接
-     * @param mixed  $default 如果没有查到数组中的该值返回的默认值
+     * @param array $array 数组
+     * @param string $path 字符串，多维的由$delimiter连接
+     * @param mixed $default 如果没有查到数组中的该值返回的默认值
      *
      * @return mixed
      */
@@ -649,9 +649,9 @@ class ArrayUtility
         return $arr;
     }
 
-    /* @param array   $arr              数据源
-     * @param string  $key_field        按照什么键的值进行转换
-     * @param string  $value_field      对应的键值
+    /* @param array $arr 数据源
+     * @param string $key_field 按照什么键的值进行转换
+     * @param string $value_field 对应的键值
      * @param boolean $force_string_key 强制使用字符串KEY
      *
      * @return array 转换后的 HashMap 样式数组
@@ -661,12 +661,12 @@ class ArrayUtility
         $ret = array();
         if ($value_field) {
             foreach ($arr as $row) {
-                $key = $force_string_key ? (string) $row->$key_field : $row->$key_field;
+                $key = $force_string_key ? (string)$row->$key_field : $row->$key_field;
                 $ret[$key] = $row[$value_field];
             }
         } else {
             foreach ($arr as $row) {
-                $key = $force_string_key ? (string) $row->$key_field : $row->$key_field;
+                $key = $force_string_key ? (string)$row->$key_field : $row->$key_field;
                 $ret[$key] = $row;
             }
         }
@@ -695,7 +695,7 @@ class ArrayUtility
             }
         } else {
             foreach ($arr as $v) {
-                extract((array) $v);
+                extract((array)$v);
                 $newArr[] = compact($keys);
             }
         }
@@ -731,7 +731,7 @@ class ArrayUtility
                 continue;
             }
 
-            if(in_array($value,$values)){
+            if (in_array($value, $values)) {
                 unset($array[$item]);
             }
         }
@@ -744,10 +744,11 @@ class ArrayUtility
      * 判断多个数组是否为空
      * 判断原则 有一个为空 就都为空
      */
-    public static function ArrayEmpty(array $array):bool {
+    public static function ArrayEmpty(array $array): bool
+    {
 
-        foreach ($array as $value){
-            if(Tools::superEmpty($value)){
+        foreach ($array as $value) {
+            if (Tools::superEmpty($value)) {
                 return true;
             }
         }
@@ -761,15 +762,38 @@ class ArrayUtility
      * @param array $array 原始数组
      * @param array $keys 过滤掉的元素
      */
-    public static function getArrByKeys(array $array,array $keys = []):array {
+    public static function getArrByKeys(array $array, array $keys = []): array
+    {
 
         $nList = [];
-        foreach ($array as $item => $value){
-            if(ArrayUtility::arrayFlip($keys,$item)){
+        foreach ($array as $item => $value) {
+            if (ArrayUtility::arrayFlip($keys, $item)) {
                 $nList[$item] = $array[$item];
             }
         }
 
         return $nList;
+    }
+
+    /**
+     * 升级版 array_unshift 支持像二级数组中添加一个字段
+     */
+    public static function arrayPush(array $array, array $fields)
+    {
+        if (count($array) == count($array, COUNT_RECURSIVE)) {
+
+            foreach ($fields as $field => $val) {
+                array_push($array, $val);
+            }
+
+        } else {
+            foreach ($array as $key => $arr) {
+                foreach ($fields as $field => $val) {
+                    $array[$key][$field] = $val;
+                }
+            }
+        }
+
+        return $array;
     }
 }
