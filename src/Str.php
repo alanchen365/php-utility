@@ -12,11 +12,11 @@ class Str
 {
     /**
      * 检查字符串中是否包含另一字符串
-     * @param string       $haystack 被检查的字符串
-     * @param string|array $needles  需要包含的字符串
-     * @param bool         $strict   为true 则检查时区分大小写
-     * @author : evalor <master@evalor.cn>
+     * @param string $haystack 被检查的字符串
+     * @param string|array $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function contains($haystack, $needles, $strict = true)
     {
@@ -36,10 +36,10 @@ class Str
     /**
      * 检查字符串是否以某个字符串开头
      * @param string $haystack 被检查的字符串
-     * @param string $needles  需要包含的字符串
-     * @param bool   $strict   为true 则检查时区分大小写
-     * @author : evalor <master@evalor.cn>
+     * @param string $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function startsWith($haystack, $needles, $strict = true)
     {
@@ -59,10 +59,10 @@ class Str
     /**
      * 检查字符串是否以某个字符串结尾
      * @param string $haystack 被检查的字符串
-     * @param string $needles  需要包含的字符串
-     * @param bool   $strict   为true 则检查时区分大小写
-     * @author : evalor <master@evalor.cn>
+     * @param string $needles 需要包含的字符串
+     * @param bool $strict 为true 则检查时区分大小写
      * @return bool
+     * @author : evalor <master@evalor.cn>
      */
     static function endsWith($haystack, $needles, $strict = true)
     {
@@ -81,10 +81,10 @@ class Str
 
     /**
      * 驼峰转下划线
-     * @param string $value     待处理字符串
+     * @param string $value 待处理字符串
      * @param string $delimiter 分隔符
-     * @author : evalor <master@evalor.cn>
      * @return null|string|string[]
+     * @author : evalor <master@evalor.cn>
      */
     static function snake($value, $delimiter = '_')
     {
@@ -98,8 +98,8 @@ class Str
     /**
      * 下划线转驼峰 (首字母小写)
      * @param string $value 待处理字符串
-     * @author : evalor <master@evalor.cn>
      * @return string
+     * @author : evalor <master@evalor.cn>
      */
     static function camel($value)
     {
@@ -109,12 +109,22 @@ class Str
     /**
      * 下划线转驼峰 (首字母大写)
      * @param string $value 待处理字符串
-     * @author : evalor <master@evalor.cn>
      * @return mixed
+     * @author : evalor <master@evalor.cn>
      */
     static function studly($value)
     {
-        $value = ucwords(str_replace([ '-', '_' ], ' ', $value));
+        $value = ucwords(str_replace(['-', '_'], ' ', $value));
         return str_replace(' ', '', $value);
+    }
+
+    /**
+     * 去除字符串中所有空格
+     */
+    static function trimAll(string $str)
+    {
+        $qian = array(" ", "　", "\t", "\n", "\r");
+        $hou = array("", "", "", "", "");
+        return str_replace($qian, $hou, $str);
     }
 }
