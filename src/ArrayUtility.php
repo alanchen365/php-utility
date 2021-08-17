@@ -818,7 +818,7 @@ class ArrayUtility
      * @return array|null ['2021-03-03','2023-03-12']
      * @throws InfoException
      */
-    public static function getColunm(array $params, string $colunm): ?array
+    public static function getYmd(array $params, string $colunm): ?array
     {
         if (superEmpty($params)) {
             return null;
