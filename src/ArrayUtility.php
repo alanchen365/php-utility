@@ -2,6 +2,8 @@
 
 namespace Es3\Utility;
 
+use Es3\Exception\InfoException;
+
 class ArrayUtility
 {
 
@@ -676,25 +678,25 @@ class ArrayUtility
 
     /**
      * 提取一维或二维数组的指定一列或多列
-     * @param $arr
+     * @param $array
      * @param $keys
      * @return array
      */
-    public static function arrayFilterKeys($arr, $keys)
+    public static function arrayFilterKeys($array, $keys)
     {
-        if (empty($arr)) {
+        if (empty($array)) {
             return [];
         }
-        $arr = (array)$arr;
+        $array = (array)$array;
         //判断是否是一维数组
-        if (!isset($arr[0])) {
-            foreach ((array)$arr as $key => $value) {
+        if (!isset($array[0])) {
+            foreach ((array)$array as $key => $value) {
                 if (in_array($key, $keys)) {
                     $newArr[$key] = $value;
                 }
             }
         } else {
-            foreach ($arr as $v) {
+            foreach ($array as $v) {
                 extract((array)$v);
                 $newArr[] = compact($keys);
             }
@@ -739,14 +741,12 @@ class ArrayUtility
         return array_values($array) ?? [];
     }
 
-
     /**
      * 判断多个数组是否为空
      * 判断原则 有一个为空 就都为空
      */
     public static function ArrayEmpty(array $array): bool
     {
-
         foreach ($array as $value) {
             if (Tools::superEmpty($value)) {
                 return true;
@@ -756,7 +756,6 @@ class ArrayUtility
         return false;
     }
 
-
     /**
      * 保留数组中部分元素
      * @param array $array 原始数组
@@ -764,11 +763,26 @@ class ArrayUtility
      */
     public static function getArrByKeys(array $array, array $keys = []): array
     {
+        $isMultiple = ArrayUtility::isMultiple($array);
 
+        /** 一维数组 */
+        if (!$isMultiple) {
+            $nList = [];
+            foreach ($array as $item => $value) {
+                if (ArrayUtility::arrayFlip($keys, $item)) {
+                    $nList[$item] = $array[$item];
+                }
+            }
+            return $nList;
+        }
+
+        /** 最多支持到二维数组 */
         $nList = [];
-        foreach ($array as $item => $value) {
-            if (ArrayUtility::arrayFlip($keys, $item)) {
-                $nList[$item] = $array[$item];
+        foreach ($array as $key => $list) {
+            foreach ($list as $k => $v) {
+                if (ArrayUtility::arrayFlip($keys, $k)) {
+                    $nList[$key][$k] = $list[$k];
+                }
             }
         }
 
@@ -795,5 +809,39 @@ class ArrayUtility
         }
 
         return $array;
+    }
+
+    /**
+     * 数组中去掉年时分秒 仅保留年月日
+     * @param array $params 例如 [['id'=>1,'create_time'=>'2021-02-02 23:23:22'],...]
+     * @param string $colunm 例如 'create_time'
+     * @return array|null ['2021-03-03','2023-03-12']
+     * @throws InfoException
+     */
+    public static function getColunm(array $params, string $colunm): ?array
+    {
+        if (superEmpty($params)) {
+            return null;
+        }
+
+        /** 获取某一列 */
+        $params = array_column($params, $colunm);
+        $ymd = null;
+        foreach ($params as $key => $ymdHis) {
+            $ymd[] = date('Y-m-d', strtotime($ymdHis));
+        }
+        return is_array($ymd) ? array_unique($ymd) : null;
+    }
+
+    /**
+     * 数组是否多维
+     */
+    public static function isMultiple(array $array): bool
+    {
+        if (count($array) == count($array, 1)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
