@@ -66,7 +66,7 @@ class Time
      * @throws \Exception
      * @author : evalor <master@evalor.cn>
      */
-    static function parserDateTime($dateTime): array
+    static function parserDateTime($dateTime)
     {
         if (!$dateTime instanceof \DateTime) $dateTime = static::createDateTimeClass($dateTime);
         $year = $dateTime->format('Y');
@@ -75,14 +75,11 @@ class Time
         $hour = $dateTime->format('H');
         $minute = $dateTime->format('i');
         $second = $dateTime->format('s');
-        return [$hour, $minute, $second, $month, $day, $year];
+        return ['hour' => $hour, 'minute' => $minute, 'second' => $second, 'month' => $month, 'day' => $day, 'year' => $year];
     }
 
     /**
      * 判断年月日是否合法
-     * @param string $ymd
-     * @param string $format 输入 - 或者 / 或者 , 用来区分日期的分隔符
-     * @return bool
      */
     static function isYmd(string $ymd, string $format = '-'): bool
     {
@@ -92,5 +89,18 @@ class Time
         } else {
             return false;
         }
+    }
+
+    /**
+     * 导入数据验证
+     * @param array $validaData
+     * @return array
+     */
+    static function excelDateToYmd(int $excelDate, string $format = 'Y-m-d'): string
+    {
+        $d = 25569;
+        $t = 24 * 60 * 60;
+
+        return strval(gmdate($format, ($excelDate - $d) * $t));
     }
 }
