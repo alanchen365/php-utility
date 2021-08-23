@@ -61,12 +61,12 @@ class Time
 
     /**
      * 从DateTime对象中获取年月日时分秒
-     * @author : evalor <master@evalor.cn>
      * @param \DateTime|string $dateTime 传入文本日期或者时间戳
      * @return array 时 分 秒 月 日 年
      * @throws \Exception
+     * @author : evalor <master@evalor.cn>
      */
-    static function parserDateTime($dateTime)
+    static function parserDateTime($dateTime): array
     {
         if (!$dateTime instanceof \DateTime) $dateTime = static::createDateTimeClass($dateTime);
         $year = $dateTime->format('Y');
@@ -75,6 +75,22 @@ class Time
         $hour = $dateTime->format('H');
         $minute = $dateTime->format('i');
         $second = $dateTime->format('s');
-        return [ $hour, $minute, $second, $month, $day, $year ];
+        return [$hour, $minute, $second, $month, $day, $year];
+    }
+
+    /**
+     * 判断年月日是否合法
+     * @param string $ymd
+     * @param string $format 输入 - 或者 / 或者 , 用来区分日期的分隔符
+     * @return bool
+     */
+    static function isYmd(string $ymd, string $format = '-'): bool
+    {
+        $timeStamp = strtotime($ymd);
+        if ($ymd == (date("Y{$format}m{$format}d", $timeStamp)) || $ymd == (date("Y{$format}m{$format}j", $timeStamp)) || $ymd == (date("Y{$format}n{$format}d", $timeStamp)) || $ymd == (date("Y{$format}n{$format}j", $timeStamp))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
