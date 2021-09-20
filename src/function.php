@@ -42,7 +42,12 @@ function superEmpty($value): bool
     return false;
 }
 
-function nowdate(string $format = 'Y-m-d H:i:s'): string
+function nowDate(string $format = 'Y-m-d H:i:s'): string
 {
     return date($format, time());
+}
+
+function jsonEncodeUnicode($value, $depth = 512): string
+{
+    return json_encode($value, JSON_UNESCAPED_UNICODE, $depth);
 }
