@@ -47,3 +47,12 @@ function nowDate(string $format = 'Y-m-d H:i:s'): string
     return date($format, time());
 }
 
+function isInt($val): bool
+{
+    return is_int($val) || is_integer($val);
+}
+
+function isDouble($val): bool
+{
+    return is_float($val) || is_double($val);
+}
