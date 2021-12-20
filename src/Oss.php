@@ -40,6 +40,11 @@ class Oss
             throw new WaringException(7501, 'Oss文件上传失败');
         }
 
+        // 将内网链接处理成外网链接
+        if (true == strpos($result['oss-requestheaders']['Host'], '-internal')) {
+            $result['oss-requestheaders']['Host'] = strtr($result['oss-requestheaders']['Host'], ["-internal" => '']);
+        }
+
         $oss = [
             'system_code' => AppConst::SYSTEM_CODE,
             'hash' => $result['x-oss-hash-crc64ecma'] ?? '',
