@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util;
+namespace Es3\Utility;
 
 class Mail
 {
